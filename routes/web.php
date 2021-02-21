@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    $nama = "Rizal Afandi";
+    return view('index', ['nama' => $nama]);
 });
 
 Route::get('/about', function () {
