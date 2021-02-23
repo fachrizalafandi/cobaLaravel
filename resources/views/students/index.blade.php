@@ -15,7 +15,7 @@
                                 <th>Nama</th>
                                 <th>NIM</th>
                                 <th>Email</th>
-                                <th style="width: 120px">Jurusan</th>
+                                <th>Jurusan</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -33,7 +33,29 @@
 @section('footer')
     <script>
       $(document).ready(function() {
-        $('#datatable').DataTable();
+        var t = $('#datatable').DataTable({
+                  processing:true,
+                  serverside:true,
+                  ajax:"{{ route('ajax.get.students') }}",
+                  "columns": [
+                    {data: 'id'},
+                    {data: 'nama'},
+                    {data: 'nim'},
+                    {data: 'email'},
+                    {data: 'jurusan'}
+                  ],
+                  "columnDefs":[{
+                    "searchable":false,
+                    "orderable": false,
+                    "targets":0
+                  }],
+                  "order":[[0,'desc']]
+                });
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            });
+        }).draw();
     } );
     </script>
 @endsection

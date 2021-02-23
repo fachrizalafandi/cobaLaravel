@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Contracts\DataTable;
+use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
 
 class StudentsController extends Controller
 {
@@ -18,6 +21,13 @@ class StudentsController extends Controller
         $students = Student::orderBy('id', 'desc')->get();
 
         return view('students.index', ['students' => $students]);
+    }
+
+    public function getstudents()
+    {
+        $students = Student::orderBy('id', 'desc')->get();
+
+        return DataTables::of($students)->make(true);
     }
 
     /**
